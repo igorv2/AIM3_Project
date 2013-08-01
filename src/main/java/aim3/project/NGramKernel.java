@@ -1,6 +1,6 @@
 package aim3.project;
 
-public class NGramKernel {
+public class NGramKernel  {
 	int minn;
 	int maxn;
 	int w;

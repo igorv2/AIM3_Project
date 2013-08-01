@@ -27,19 +27,19 @@
       <groupId>com.numericalmethod</groupId>
       <artifactId>suanshu</artifactId>
       <version>2.1.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-	<groupId>org.apache.commons</groupId>
-	<artifactId>commons-math3</artifactId>
-	<version>3.0</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>eu.stratosphere</groupId>
       <artifactId>pact-common</artifactId>
-      <version>0.2</version>
+      <version>0.2-ozone</version>
       <type>jar</type>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -48,59 +48,55 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>optimbin</groupId>
-      <artifactId>joptb</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-	<groupId>colt</groupId>
-	<artifactId>colt</artifactId>
-	<version>1.2.0</version>
+      <groupId>colt</groupId>
+      <artifactId>colt</artifactId>
+      <version>1.2.0</version>
     </dependency>
   </dependencies>
 
- <build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <configuration>
-        <target>1.6</target>
-        <source>1.6</source>
-      </configuration>
-    </plugin>
-   <plugin>
-    <artifactId>maven-assembly-plugin</artifactId>
-    <executions>
-      <execution>
-        <phase>package</phase>
-        <goals>
-          <goal>attached</goal>
-        </goals>
-      </execution>
-    </executions>
-    <configuration>
-      <descriptorRefs>
-        <descriptorRef>jar-with-dependencies</descriptorRef>
-      </descriptorRefs>
-    </configuration>
-  </plugin>
-  <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-jar-plugin</artifactId>
-    <configuration>
-      <archive>
-        <manifest>
-          <addClasspath>true</addClasspath>
-         </manifest>
-      </archive>
-    </configuration>
-        
-  </plugin>
-
-
-  </plugins>
- </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <target>1.6</target>
+          <source>1.6</source>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Pact-Assembler-Class>aim3.project.Trainer</Pact-Assembler-Class>
+            </manifestEntries>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

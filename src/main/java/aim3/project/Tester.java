@@ -21,7 +21,7 @@ import eu.stratosphere.pact.common.stubs.MatchStub;
 import eu.stratosphere.pact.common.stubs.ReduceStub;
 import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFields;
 import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFieldsSecondExcept;
-import eu.stratosphere.pact.common.stubs.StubAnnotation.OutCardBounds;
+//import eu.stratosphere.pact.common.stubs.StubAnnotation.OutCardBounds;
 import eu.stratosphere.pact.common.type.PactRecord;
 import eu.stratosphere.pact.common.type.base.PactDouble;
 import eu.stratosphere.pact.common.type.base.PactInteger;
@@ -44,7 +44,7 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 		FileDataSource train = new FileDataSource(RecordInputFormat.class,
 				trainInput, "Training results");
 		train.setDegreeOfParallelism(noSubTasks);
-		train.getCompilerHints().setUniqueField(new FieldSet(1));
+//		train.getCompilerHints().setUniqueField(new FieldSet(1));
 		RecordInputFormat.configureRecordFormat(train).recordDelimiter('\n')
 				.fieldDelimiter('\t').field(DecimalTextIntParser.class, 0)
 				.field(DecimalTextIntParser.class, 1)
@@ -54,7 +54,7 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 		FileDataSource test = new FileDataSource(RecordInputFormat.class,
 				testInput, "Test Data");
 		test.setDegreeOfParallelism(noSubTasks);
-		test.getCompilerHints().setUniqueField(new FieldSet(0));
+		test.getCompilerHints().addUniqueField(new FieldSet(0));
 		RecordInputFormat.configureRecordFormat(test).recordDelimiter('\n')
 				.fieldDelimiter('\t').field(DecimalTextIntParser.class, 0)
 				.field(DecimalTextIntParser.class, 1)
@@ -72,7 +72,7 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 				.input(test).name("Filter the test data").build();
 		processTest.setDegreeOfParallelism(noSubTasks);
 		processTrain.getCompilerHints().setAvgBytesPerRecord(120);
-		processTrain.getCompilerHints().setUniqueField(
+		processTrain.getCompilerHints().addUniqueField(
 				new FieldSet(new int[] { 0 }));
 
 		MatchContract joinTrain = MatchContract
@@ -127,8 +127,8 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 		return "Parameters: [noSubTasks] [input:TrainData] [input:TestData] [output]";
 	}
 
-	@ConstantFields(fields = { 0, 1, 2, 3, 4 })
-	@OutCardBounds(lowerBound = 0, upperBound = 1)
+	@ConstantFields(value = { 0, 1, 2, 3, 4 })
+//	@OutCardBounds(lowerBound = 0, upperBound = 1)
 	public static class ProcessTestData extends MapStub {
 
 		@Override
@@ -142,7 +142,7 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 
 	}
 
-	@ConstantFields(fields = { 0, 1, 2 })
+	@ConstantFields(value = { 0, 1, 2 })
 	public static class ProcessTrainData extends MapStub {
 
 		@Override
@@ -154,8 +154,8 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 
 	}
 
-	@ConstantFieldsSecondExcept(fields = { 4 })
-	@OutCardBounds(lowerBound = 1, upperBound = 1)
+	@ConstantFieldsSecondExcept(value = { 4 })
+//	@OutCardBounds(lowerBound = 1, upperBound = 1)
 	public static class JoinTrain extends MatchStub {
 		@Override
 		public void match(PactRecord first, PactRecord second,
@@ -214,8 +214,8 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 
 	}
 
-	@ConstantFields(fields = { 0 })
-	@OutCardBounds(lowerBound = 1, upperBound = 1)
+	@ConstantFields(value = { 0 })
+//	@OutCardBounds(lowerBound = 1, upperBound = 1)
 	public static class ReduceForID extends ReduceStub {
 		PactRecord rec;
 		PactInteger one = new PactInteger(1);
@@ -249,8 +249,8 @@ public class Tester implements PlanAssemblerDescription, PlanAssembler {
 
 	}
 
-	@ConstantFields(fields = { 0 })
-	@OutCardBounds(lowerBound = 1, upperBound = 1)
+	@ConstantFields(value = { 0 })
+//	@OutCardBounds(lowerBound = 1, upperBound = 1)
 	@Combinable
 	public static class ReduceForTrain extends ReduceStub {
 		PactRecord rec;

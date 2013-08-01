@@ -5,11 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.joptimizer.functions.ConvexMultivariateRealFunction;
-import com.joptimizer.functions.LinearMultivariateRealFunction;
-import com.joptimizer.functions.PDQuadraticMultivariateRealFunction;
-import com.joptimizer.optimizers.JOptimizer;
-import com.joptimizer.optimizers.OptimizationRequest;
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.SparseVector;
@@ -42,7 +37,7 @@ import eu.stratosphere.pact.common.stubs.ReduceStub;
 import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFields;
 import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFieldsFirst;
 import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFieldsSecond;
-import eu.stratosphere.pact.common.stubs.StubAnnotation.OutCardBounds;
+//import eu.stratosphere.pact.common.stubs.StubAnnotation.OutCardBounds;
 import eu.stratosphere.pact.common.type.PactRecord;
 import eu.stratosphere.pact.common.type.base.PactDouble;
 import eu.stratosphere.pact.common.type.base.PactInteger;
@@ -70,7 +65,7 @@ public class Trainer implements PlanAssembler, PlanAssemblerDescription {
 		FileDataSource train = new FileDataSource(RecordInputFormat.class,
 				trainData, "Training Data");
 		train.setDegreeOfParallelism(noSubTasks);
-		train.getCompilerHints().setUniqueField(new FieldSet(0));
+//		train.getCompilerHints().setUniqueField(new FieldSet(0));
 		RecordInputFormat.configureRecordFormat(train).recordDelimiter('\n')
 				.fieldDelimiter('\t').field(DecimalTextIntParser.class, 0)
 				.field(DecimalTextIntParser.class, 1)
@@ -127,8 +122,8 @@ public class Trainer implements PlanAssembler, PlanAssemblerDescription {
 	 * @author Igor Viskovic: igorv@mailbox.tu-berlin.de
 	 * 
 	 */
-	@ConstantFields(fields = { 0, 1, 2, 3 })
-	@OutCardBounds(lowerBound = 0, upperBound = 1)
+	@ConstantFields(value = { 0, 1, 2, 3 })
+//	@OutCardBounds(lowerBound = 0, upperBound = 1)
 	public static class ProcessInput extends MapStub {
 
 		@Override
@@ -143,9 +138,9 @@ public class Trainer implements PlanAssembler, PlanAssemblerDescription {
 
 	}
 
-	@ConstantFieldsFirst(fields = { 0, 3 })
-	@ConstantFieldsSecond(fields = { 0, 1, 3 })
-	@OutCardBounds(lowerBound = 0, upperBound = 1)
+	@ConstantFieldsFirst(value = { 0, 3 })
+	@ConstantFieldsSecond(value = { 0, 1, 3 })
+//	@OutCardBounds(lowerBound = 0, upperBound = 1)
 	public static class CreatePairs extends MatchStub {
 		@Override
 		public void match(PactRecord first, PactRecord second,
