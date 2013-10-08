@@ -2,6 +2,7 @@ package aim3.project;
 
 import java.util.Iterator;
 
+import aim3.project.utils.kernels.stringKernels.NGramKernel;
 import eu.stratosphere.pact.common.contract.CrossContract;
 import eu.stratosphere.pact.common.contract.FileDataSink;
 import eu.stratosphere.pact.common.contract.FileDataSource;

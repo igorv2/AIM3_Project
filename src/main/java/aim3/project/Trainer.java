@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import aim3.project.utils.kernels.stringKernels.NGramKernel;
+
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.Matrix;
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.dense.DenseMatrix;
 import com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.SparseVector;
@@ -41,12 +43,18 @@ import eu.stratosphere.pact.common.stubs.StubAnnotation.ConstantFieldsSecond;
 import eu.stratosphere.pact.common.type.PactRecord;
 import eu.stratosphere.pact.common.type.base.PactDouble;
 import eu.stratosphere.pact.common.type.base.PactInteger;
+import eu.stratosphere.pact.common.type.base.PactList;
 import eu.stratosphere.pact.common.type.base.PactMap;
 import eu.stratosphere.pact.common.type.base.PactString;
 import eu.stratosphere.pact.common.type.base.parser.DecimalTextDoubleParser;
 import eu.stratosphere.pact.common.type.base.parser.DecimalTextIntParser;
 import eu.stratosphere.pact.common.type.base.parser.VarLengthStringParser;
 import eu.stratosphere.pact.common.util.FieldSet;
+
+/*
+ * General outline:
+ * ID, GROUP, CLASS, MESSAGE
+ */
 
 
 public class Trainer implements PlanAssembler, PlanAssemblerDescription {
@@ -61,7 +69,7 @@ public class Trainer implements PlanAssembler, PlanAssemblerDescription {
 		String output = (args.length > 2 ? args[2] : "");
 
 		// Configure the training source:
-
+		
 		FileDataSource train = new FileDataSource(RecordInputFormat.class,
 				trainData, "Training Data");
 		train.setDegreeOfParallelism(noSubTasks);
@@ -135,7 +143,7 @@ public class Trainer implements PlanAssembler, PlanAssemblerDescription {
 				collector.collect(record);
 			// Format: ID, Sent, Mes, TrainVal
 		}
-
+		
 	}
 
 	@ConstantFieldsFirst(value = { 0, 3 })
